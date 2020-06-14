@@ -23,6 +23,8 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val a = 65
+
         bLogin.setOnClickListener {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
         }
