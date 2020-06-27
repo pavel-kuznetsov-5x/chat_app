@@ -5,7 +5,7 @@ import com.spqrta.chatapp.repository.UserRepository
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class User(
+data class User(
     val id: Int,
     val displayName: String,
     val avatarUrl: String

@@ -12,8 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if(UserRepository.isLoggedIn())
-
-        findNavController(R.id.nav_host).navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
+        if(UserRepository.isLoggedIn()) {
+            findNavController(R.id.nav_host).navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
+        }
     }
 }

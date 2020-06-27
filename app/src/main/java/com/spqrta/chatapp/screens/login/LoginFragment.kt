@@ -9,6 +9,8 @@ import com.spqrta.chatapp.MainActivity
 
 import com.spqrta.chatapp.R
 import com.spqrta.chatapp.repository.UserRepository
+import com.spqrta.chatapp.utility.Logger
+import com.spqrta.chatapp.utility.Toaster
 import com.spqrta.chatapp.utility.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -24,12 +26,13 @@ class LoginFragment : BaseFragment<MainActivity>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         bLogin.setOnClickListener {
-            UserRepository.login().subscribeManaged {
+            UserRepository.login().subscribeManaged ({
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
-            }
+            }, {
+                Toaster.show(it)
+                Logger.e(it)
+            })
         }
     }
 }
