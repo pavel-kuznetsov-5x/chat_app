@@ -33,7 +33,7 @@ class ChatsFragment : BaseFragment<MainActivity>() {
         rvChats.adapter = adapter
 
         adapter.onItemClickListener = {
-            findNavController().navigate(ChatsFragmentDirections.actionChatsFragmentToChatFragment(it.id))
+            findNavController().navigate(ChatsFragmentDirections.actionChatsFragmentToChatFragment(it))
         }
 
         ChatsRepository.getChats().subscribeManaged {

@@ -20,7 +20,8 @@ class ChatsAdapter: BaseAdapter<Chat, ChatsAdapter.VhChat>() {
 
         override fun bind(item: Chat) {
             containerView.tvChatName.text = item.name
-            containerView.tvChatLastMessage.text = "${item.lastMessage.from.displayName}: ${item.lastMessage.text}"
+            //todo
+            containerView.tvChatLastMessage.text = "${item.lastMessage?.from?.displayName}: ${item.lastMessage?.text}"
             Glide.with(containerView.context).load(item.avatarUrl).into(containerView.ivChatAvatar)
         }
     }
