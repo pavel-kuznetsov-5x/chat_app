@@ -1,4 +1,4 @@
-package com.spqrta.reusables.recycler
+package com.spqrta.chatapp.utility.recycler
 
 import android.view.LayoutInflater
 import android.view.View

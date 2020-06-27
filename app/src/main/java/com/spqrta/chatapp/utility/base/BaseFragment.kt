@@ -1,4 +1,4 @@
-package com.spqrta.reusables.base
+package com.spqrta.chatapp.utility.base
 
 import android.app.Activity
 import android.os.Bundle

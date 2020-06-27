@@ -1,14 +1,18 @@
-package com.spqrta.chatapp.utility.base
+package com.spqrta.chatapp.utility
 
-import androidx.lifecycle.ViewModel
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseViewModel : ViewModel() {
+open class SubscriptionManager {
 
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private var compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    fun disposeAll() {
+        compositeDisposable.dispose()
+        compositeDisposable = CompositeDisposable()
+    }
 
     fun <T> Single<T>.subscribeManaged(onSuccess: (T) -> Unit): Disposable {
         val disposable = subscribe(onSuccess)
@@ -38,10 +42,5 @@ abstract class BaseViewModel : ViewModel() {
         val disposable = subscribe(onSuccess, onError)
         compositeDisposable.add(disposable)
         return disposable
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
     }
 }

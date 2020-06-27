@@ -1,17 +1,18 @@
 package com.spqrta.chatapp.screens.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.spqrta.chatapp.MainActivity
 
 import com.spqrta.chatapp.R
+import com.spqrta.chatapp.repository.UserRepository
+import com.spqrta.chatapp.utility.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment<MainActivity>() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,8 +24,12 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         bLogin.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
+            UserRepository.login().subscribeManaged {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
+            }
         }
     }
 }

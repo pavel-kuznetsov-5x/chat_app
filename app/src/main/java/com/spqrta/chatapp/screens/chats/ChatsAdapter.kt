@@ -3,7 +3,7 @@ package com.spqrta.chatapp.screens.chats
 import android.view.View
 import com.bumptech.glide.Glide
 import com.spqrta.chatapp.entity.Chat
-import com.spqrta.reusables.recycler.BaseAdapter
+import com.spqrta.chatapp.utility.recycler.BaseAdapter
 import kotlinx.android.extensions.LayoutContainer
 import com.spqrta.chatapp.R
 import kotlinx.android.synthetic.main.item_chat.view.*
