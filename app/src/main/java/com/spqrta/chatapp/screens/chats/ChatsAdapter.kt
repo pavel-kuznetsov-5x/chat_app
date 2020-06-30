@@ -19,9 +19,14 @@ class ChatsAdapter: BaseAdapter<Chat, ChatsAdapter.VhChat>() {
     class VhChat(override val containerView: View, clickListener: (Int) -> Unit): BaseVh<Chat>(containerView, clickListener), LayoutContainer {
 
         override fun bind(item: Chat) {
-            containerView.tvChatName.text = item.name
+            containerView.tvChatName.text = item.displayName
             //todo
-            containerView.tvChatLastMessage.text = "${item.lastMessage?.from?.displayName}: ${item.lastMessage?.text}"
+            if(item.lastMessage != null) {
+                containerView.tvChatLastMessage.text =
+                    "${item.lastMessage?.from?.displayName}: ${item.lastMessage?.text}"
+            } else {
+                containerView.tvChatLastMessage.text = "No messages yet"
+            }
             Glide.with(containerView.context).load(item.avatarUrl).into(containerView.ivChatAvatar)
         }
     }

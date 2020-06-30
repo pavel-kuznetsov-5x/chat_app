@@ -2,11 +2,9 @@ package com.spqrta.chatapp.network
 
 import com.google.gson.annotations.SerializedName
 import com.spqrta.chatapp.entity.Chat
+import com.spqrta.chatapp.entity.Message
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface Api {
 
@@ -23,5 +21,8 @@ interface Api {
 
     @GET("/api/chats")
     fun getUserChats(): Single<List<Chat>>
+
+    @GET("/api/messages")
+    fun getMessages(@Query("chat_id") chatId: Int): Single<List<Message>>
 
 }

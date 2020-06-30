@@ -1,14 +1,15 @@
 package com.spqrta.chatapp.entity
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Chat(
     val id: Int,
-    val name: String,
+    @SerializedName("display_name") val displayName: String,
     //todo null
-    val avatarUrl: String,
+    @SerializedName("avatar_url") val avatarUrl: String,
     var lastMessage: Message? = null
 ): Parcelable {
     companion object {
