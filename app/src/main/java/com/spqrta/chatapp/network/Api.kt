@@ -25,4 +25,11 @@ interface Api {
     @GET("/api/messages")
     fun getMessages(@Query("chat_id") chatId: Int): Single<List<Message>>
 
+    @POST("/api/messages/")
+    fun sendMessage(@Body body: MessageBody): Single<Message>
+    class MessageBody(
+        val chat: Int,
+        val text: String
+    )
+
 }

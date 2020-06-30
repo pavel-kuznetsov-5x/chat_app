@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 class Message(
     val id: Int,
     val text: String,
-    @SerializedName("from_user") val from: User
+    @SerializedName("author") val from: User
 //    val chat: Chat
 ): Parcelable {
 

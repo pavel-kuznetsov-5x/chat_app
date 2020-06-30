@@ -2,18 +2,51 @@ package com.spqrta.chatapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.spqrta.chatapp.repository.UserRepository
 import com.spqrta.chatapp.screens.login.LoginFragmentDirections
+import com.spqrta.chatapp.utility.SubscriptionManager
+import com.spqrta.chatapp.utility.base.BaseFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if(UserRepository.isLoggedIn()) {
-            findNavController(R.id.nav_host).navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
+        navController = findNavController(R.id.nav_host)
+
+        toolbar.setTitleTextColor(resources.getColor(R.color.white))
+        setSupportActionBar(toolbar)
+        NavigationUI.setupActionBarWithNavController(
+            this,
+            navController,
+            AppBarConfiguration(setOf(R.id.chatsFragment))
+        )
+
+        navController.addOnDestinationChangedListener { _, destination, bundle ->
+            try {
+                val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host)
+                val previousFragment =
+                    navHostFragment!!.childFragmentManager.fragments[0] as BaseFragment<*>
+                previousFragment.onLeave()
+            } catch (e: IndexOutOfBoundsException) {
+            }
+        }
+
+        if (UserRepository.isLoggedIn()) {
+            navController.navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
         }
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
 }
