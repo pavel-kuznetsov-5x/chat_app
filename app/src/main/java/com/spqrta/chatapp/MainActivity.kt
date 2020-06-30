@@ -6,8 +6,11 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.spqrta.chatapp.repository.UserRepository
 import com.spqrta.chatapp.screens.login.LoginFragmentDirections
+import com.spqrta.chatapp.utility.Logger
 import com.spqrta.chatapp.utility.SubscriptionManager
 import com.spqrta.chatapp.utility.base.BaseFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -43,6 +46,17 @@ class MainActivity : AppCompatActivity() {
         if (UserRepository.isLoggedIn()) {
             navController.navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
         }
+
+        //todo
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+
+                val token = task.result?.token
+                Logger.d(token)
+            })
     }
 
     override fun onSupportNavigateUp(): Boolean {
