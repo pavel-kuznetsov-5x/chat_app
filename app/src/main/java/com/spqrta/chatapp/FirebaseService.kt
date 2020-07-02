@@ -2,7 +2,10 @@ package com.spqrta.chatapp
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.spqrta.chatapp.network.Api
+import com.spqrta.chatapp.network.RequestManager
 import com.spqrta.chatapp.utility.Logger
+import com.spqrta.chatapp.utility.utils.applyGlobalTransformer
 
 class FirebaseService: FirebaseMessagingService() {
 
@@ -11,6 +14,6 @@ class FirebaseService: FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        Logger.d(token)
+        RequestManager.service.updateFcmToken(Api.TokenBody(token)).applyGlobalTransformer().subscribe()
     }
 }

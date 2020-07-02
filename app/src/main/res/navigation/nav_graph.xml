@@ -19,7 +19,6 @@
     <fragment
         android:id="@+id/chatsFragment"
         android:name="com.spqrta.chatapp.screens.chats.ChatsFragment"
-        android:label="@string/chats"
         tools:layout="@layout/fragment_chats">
         <action
             android:id="@+id/action_chatsFragment_to_chatFragment"
@@ -33,4 +32,9 @@
             android:name="chat"
             app:argType="com.spqrta.chatapp.entity.Chat" />
     </fragment>
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
 </navigation>

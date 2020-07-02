@@ -14,9 +14,9 @@ class Message(
 ): Parcelable {
 
     fun isMy(): Boolean {
-        return UserRepository.currentUser?.let {
+        return UserRepository.currentUser!!.let {
             from.id == it.id
-        } ?: false
+        }
     }
 
     companion object {

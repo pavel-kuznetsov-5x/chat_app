@@ -8,11 +8,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
+import com.spqrta.chatapp.network.Api
+import com.spqrta.chatapp.network.RequestManager
 import com.spqrta.chatapp.repository.UserRepository
 import com.spqrta.chatapp.screens.login.LoginFragmentDirections
 import com.spqrta.chatapp.utility.Logger
 import com.spqrta.chatapp.utility.SubscriptionManager
+import com.spqrta.chatapp.utility.Toaster
 import com.spqrta.chatapp.utility.base.BaseFragment
+import com.spqrta.chatapp.utility.utils.applySchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +34,10 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(
             this,
             navController,
-            AppBarConfiguration(setOf(R.id.chatsFragment))
+            AppBarConfiguration(setOf(
+                R.id.chatsFragment,
+                R.id.loginFragment
+            ))
         )
 
         navController.addOnDestinationChangedListener { _, destination, bundle ->
@@ -44,18 +51,28 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (UserRepository.isLoggedIn()) {
+            updateFcmToken()
             navController.navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
         }
+    }
 
-        //todo
+    fun onLogout() {
+        navController.navigate(NavGraphDirections.actionGlobalLoginFragment())
+    }
+
+    fun updateFcmToken() {
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     return@OnCompleteListener
                 }
 
-                val token = task.result?.token
-                Logger.d(token)
+                val token = task.result?.token ?: ""
+                RequestManager.service.updateFcmToken(Api.TokenBody(token)).applySchedulers().subscribe({
+//                        Logger.d(token)
+                }, {
+                    Logger.e(it)
+                })
             })
     }
 

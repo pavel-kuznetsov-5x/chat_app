@@ -7,9 +7,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class User(
     val id: Int,
-    val displayName: String,
+    val username: String,
     val avatarUrl: String
 ): Parcelable {
+
+    val displayName: String
+        get() = username
+
     companion object {
         fun test() = if(Math.random() > 0.5) {
             UserRepository.USER_1

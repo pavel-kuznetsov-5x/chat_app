@@ -6,6 +6,7 @@ import com.spqrta.chatapp.network.Api
 import com.spqrta.chatapp.network.RequestManager
 import com.spqrta.chatapp.utility.Toaster
 import com.spqrta.chatapp.utility.utils.StringSetting
+import com.spqrta.chatapp.utility.utils.Stub
 import com.spqrta.chatapp.utility.utils.applySchedulers
 import io.reactivex.Single
 
@@ -19,32 +20,35 @@ object UserRepository {
         override val key = "user"
     }
 
-    val currentUser: User? = userSetting.load()?.let {
-        Gson().fromJson(it, User::class.java)
-    }
+    val currentUser: User?
+        get() = userSetting.load()?.let {
+            Gson().fromJson(it, User::class.java)
+        }
 
     val token: String?
         get() = tokenSetting.load()
 
-    fun login(): Single<User> {
+    fun login(username: String, password: String): Single<Stub> {
         /*val user = USER_1
         userSetting.save(Gson().toJson(user))
         return Single.just(user)*/
-        return RequestManager.service.login(Api.LoginBody(
-            "spqrta",
-            "007007"
-        )).applySchedulers()
+        return RequestManager.service
+            .login(Api.LoginBody(username, password))
+            .applySchedulers()
             .map {
-                //todo
-                val user = User.test().copy(id = it.userId)
-                userSetting.save(Gson().toJson(user))
+                userSetting.save(Gson().toJson(it.user))
                 tokenSetting.save(it.token)
-                user
+                Stub
             }
     }
 
     fun isLoggedIn(): Boolean {
         return currentUser != null
+    }
+
+    fun logout() {
+        tokenSetting.save(null)
+        userSetting.save(null)
     }
 
     val USER_1 = User(

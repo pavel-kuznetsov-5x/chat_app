@@ -12,6 +12,7 @@ import com.spqrta.chatapp.repository.UserRepository
 import com.spqrta.chatapp.utility.Logger
 import com.spqrta.chatapp.utility.Toaster
 import com.spqrta.chatapp.utility.base.BaseFragment
+import com.spqrta.chatapp.utility.utils.textString
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseFragment<MainActivity>() {
@@ -27,12 +28,23 @@ class LoginFragment : BaseFragment<MainActivity>() {
         super.onViewCreated(view, savedInstanceState)
 
         bLogin.setOnClickListener {
-            UserRepository.login().subscribeManaged ({
+            UserRepository.login(etLogin.textString(), etPassword.textString()).subscribeManaged ({
+                mainActivity().updateFcmToken()
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChatsFragment())
             }, {
                 Toaster.show(it)
                 Logger.e(it)
             })
+        }
+
+        bSpqrta.setOnClickListener {
+            etLogin.setText("spqrta")
+            etPassword.setText("007007")
+        }
+
+        bCucumber.setOnClickListener {
+            etLogin.setText("cucumber007")
+            etPassword.setText("007007")
         }
     }
 }

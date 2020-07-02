@@ -8,6 +8,7 @@ import kotlinx.android.extensions.LayoutContainer
 import com.spqrta.chatapp.R
 import com.spqrta.chatapp.entity.Message
 import com.spqrta.chatapp.repository.UserRepository
+import com.spqrta.chatapp.utility.Logger
 import kotlinx.android.synthetic.main.item_message.view.*
 
 class MessagesAdapter : BaseAdapter<Message, MessagesAdapter.VhMessage>() {

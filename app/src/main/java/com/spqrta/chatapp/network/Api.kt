@@ -3,6 +3,8 @@ package com.spqrta.chatapp.network
 import com.google.gson.annotations.SerializedName
 import com.spqrta.chatapp.entity.Chat
 import com.spqrta.chatapp.entity.Message
+import com.spqrta.chatapp.entity.User
+import com.spqrta.chatapp.utility.utils.Stub
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -16,7 +18,7 @@ interface Api {
     )
     class LoginResponse(
         val token: String,
-        @SerializedName("user_id") val userId: Int
+        @SerializedName("user") val user: User
     )
 
     @GET("/api/chats")
@@ -30,6 +32,12 @@ interface Api {
     class MessageBody(
         val chat: Int,
         val text: String
+    )
+
+    @POST("/fcm/")
+    fun updateFcmToken(@Body body: TokenBody): Single<Stub>
+    class TokenBody(
+        val token: String
     )
 
 }
