@@ -18,6 +18,7 @@ import com.spqrta.chatapp.utility.Toaster
 import com.spqrta.chatapp.utility.base.BaseFragment
 import com.spqrta.chatapp.utility.utils.applySchedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.annotations.TestOnly
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 val token = task.result?.token ?: ""
-                RequestManager.service.updateFcmToken(Api.TokenBody(token)).applySchedulers().subscribe({
+                Dependencies.api.updateFcmToken(Api.TokenBody(token)).applySchedulers().subscribe({
 //                        Logger.d(token)
                 }, {
                     Logger.e(it)
@@ -78,6 +79,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    @TestOnly
+    fun getNavigationController(): NavController {
+        return navController
     }
 
 }

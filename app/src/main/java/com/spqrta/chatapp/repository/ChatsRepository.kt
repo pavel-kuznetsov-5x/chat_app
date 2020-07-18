@@ -1,5 +1,6 @@
 package com.spqrta.chatapp.repository
 
+import com.spqrta.chatapp.Dependencies
 import com.spqrta.chatapp.entity.Chat
 import com.spqrta.chatapp.entity.Message
 import com.spqrta.chatapp.network.RequestManager
@@ -13,7 +14,7 @@ object ChatsRepository {
 //        return Single.just(Observable.fromCallable {
 //            Chat.test()
 //        }.repeat(50).toList().blockingGet())
-        return RequestManager.service.getUserChats().applySchedulers()
+        return Dependencies.api.getUserChats().applySchedulers()
     }
 
 }

@@ -16,7 +16,7 @@ abstract class BaseAdapter<T : Any, VH : BaseAdapter.BaseVh<T>> : RecyclerView.A
         addItemsAndUpdate(_items)
     }
 
-    fun addItemsAndUpdate(_items: List<T>) {
+    open fun addItemsAndUpdate(_items: List<T>) {
         items.addAll(_items)
         notifyDataSetChanged()
     }

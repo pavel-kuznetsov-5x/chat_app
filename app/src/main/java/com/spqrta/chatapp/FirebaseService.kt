@@ -14,6 +14,6 @@ class FirebaseService: FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        RequestManager.service.updateFcmToken(Api.TokenBody(token)).applyGlobalTransformer().subscribe()
+        Dependencies.api.updateFcmToken(Api.TokenBody(token)).applyGlobalTransformer().subscribe()
     }
 }

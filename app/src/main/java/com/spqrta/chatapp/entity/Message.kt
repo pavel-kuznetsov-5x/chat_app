@@ -20,7 +20,7 @@ class Message(
     }
 
     companion object {
-        fun test(chat: Chat) = Message(
+        fun test() = Message(
             0,
             "test message ${Math.random()}",
             User.test()

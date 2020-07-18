@@ -6,7 +6,8 @@ import okhttp3.OkHttpClient
 
 object RequestManager: BaseRequestManager() {
 
-    override val baseUrl: String = "http://10.0.2.2:8000"
+//    override val baseUrl: String = "http://10.0.2.2:8000"
+    override val baseUrl: String = "http://192.168.1.160:8000"
 
     val service by lazy {
         retrofit.create(Api::class.java)

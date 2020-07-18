@@ -1,6 +1,7 @@
 package com.spqrta.chatapp.repository
 
 import com.google.gson.Gson
+import com.spqrta.chatapp.Dependencies
 import com.spqrta.chatapp.entity.User
 import com.spqrta.chatapp.network.Api
 import com.spqrta.chatapp.network.RequestManager
@@ -20,8 +21,8 @@ object UserRepository {
         override val key = "user"
     }
 
-    val currentUser: User?
-        get() = userSetting.load()?.let {
+    val currentUser: User
+        get() = userSetting.load()!!.let {
             Gson().fromJson(it, User::class.java)
         }
 
@@ -32,7 +33,7 @@ object UserRepository {
         /*val user = USER_1
         userSetting.save(Gson().toJson(user))
         return Single.just(user)*/
-        return RequestManager.service
+        return Dependencies.api
             .login(Api.LoginBody(username, password))
             .applySchedulers()
             .map {
@@ -43,7 +44,7 @@ object UserRepository {
     }
 
     fun isLoggedIn(): Boolean {
-        return currentUser != null
+        return userSetting.load() != null
     }
 
     fun logout() {
